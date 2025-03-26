@@ -92,4 +92,28 @@ document.addEventListener("DOMContentLoaded", () => {
     document.execCommand("copy");
     document.getElementById("copyMessage").textContent = "コピーしました！";
   });
+
+  // CSV / JSON ダウンロード機能
+  document.getElementById("exportCSV").addEventListener("click", () => {
+    const logs = JSON.parse(localStorage.getItem("ganesha_logs") || "[]");
+    const csv = logs.map(log =>
+      [log.date, log.task, `"${log.insight}"`, `"${log.parenting}"`].join(",")
+    );
+    csv.unshift("日付,課題,気づき,子育てとのつながり");
+    downloadFile("ganesha_logs.csv", csv.join("\n"));
+  });
+
+  document.getElementById("exportJSON").addEventListener("click", () => {
+    const logs = JSON.parse(localStorage.getItem("ganesha_logs") || "[]");
+    const json = JSON.stringify(logs, null, 2);
+    downloadFile("ganesha_logs.json", json);
+  });
+
+  function downloadFile(filename, content) {
+    const blob = new Blob([content], { type: "text/plain" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+  }
 });
