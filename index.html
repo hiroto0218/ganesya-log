@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ガネーシャ課題ログ管理</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>ガネーシャ課題ログ</h1>
+
+    <form id="logForm">
+      <label>日付（自動）:</label>
+      <input type="text" id="date" readonly />
+
+      <label>課題名:</label>
+      <input type="text" id="task" required />
+
+      <label>気づき・感想:</label>
+      <textarea id="insight" required></textarea>
+
+      <label>子育てとのつながり:</label>
+      <textarea id="parenting" placeholder="娘にどう伝えたい？何を残したい？"></textarea>
+
+      <button type="submit">保存する</button>
+      <p id="savedMsg" class="saved"></p>
+    </form>
+
+    <hr />
+
+    <h2>これまでのログ</h2>
+    <div id="logList"></div>
+
+    <hr />
+    <h2>ブログテンプレート自動生成</h2>
+    <label>今週の課題タイトル：</label>
+    <input type="text" id="weeklyTitle" placeholder="例：靴を磨く" />
+    <button id="generateBlog">テンプレート生成</button>
+    <textarea id="blogOutput" rows="15" style="margin-top:10px;width:100%;"></textarea>
+    <button id="copyBlog">コピーする</button>
+    <p id="copyMessage" class="saved"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

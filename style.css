@@ -1,0 +1,54 @@
+body {
+  font-family: "Arial", sans-serif;
+  background: #f4f2ef;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 700px;
+  margin: 30px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+h1, h2 {
+  color: #444;
+  margin-bottom: 10px;
+}
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+button {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #f9a825;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #f57f17;
+}
+.saved {
+  color: green;
+  margin-top: 10px;
+}
+.log-entry {
+  border-bottom: 1px solid #ccc;
+  margin-top: 15px;
+  padding-bottom: 10px;
+}
