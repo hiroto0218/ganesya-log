@@ -9,29 +9,26 @@
 <body>
   <div class="notebook">
     <h1>ガネーシャ課題ログ</h1>
+
     <div id="weeklyTaskArea" class="weekly-task">
       <h2>今週のガネーシャ課題</h2>
       <p id="weekly-task-title">読み込み中...</p>
       <h3>今日のアドバイス</h3>
       <p id="daily-advice">読み込み中...</p>
+      <button id="completeButton">今日のアクション達成！</button>
+      <p id="completionMessage" class="saved"></p>
     </div>
 
-    <form id="logForm">
-      <label>課題名:</label>
-      <input type="text" id="task" required />
-
-      <label>気づき・感想:</label>
-      <textarea id="insight" required></textarea>
-
-      <label>子育てとのつながり:</label>
-      <textarea id="parenting"></textarea>
-
-      <button type="submit">保存する</button>
-    </form>
+    <hr />
+    <h2>週ごとの課題履歴</h2>
+    <div id="historyArea"></div>
 
     <hr />
-    <h2>これまでのログ</h2>
-    <div id="logList"></div>
+    <h2>ブログテンプレート自動生成</h2>
+    <button id="generateBlogButton">今週のブログテンプレートを生成</button>
+    <textarea id="blogTemplate" rows="10" style="width:100%;margin-top:10px;"></textarea>
+    <button id="copyBlogBtn">コピー</button>
+    <p id="copyStatus"></p>
   </div>
 
   <script src="script.js"></script>
