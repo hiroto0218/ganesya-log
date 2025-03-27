@@ -1,119 +1,35 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const dateInput = document.getElementById("date");
-  const today = new Date().toISOString().split("T")[0];
-  dateInput.value = today;
+async function loadWeeklyTask() {
+  const response = await fetch('ganesha_tasks_extended.json');
+  const tasks = await response.json();
 
-  const form = document.getElementById("logForm");
-  const savedMsg = document.getElementById("savedMsg");
-  const logList = document.getElementById("logList");
+  const today = new Date();
+  const dayNames = ["日", "月", "火", "水", "木", "金", "土"];
+  const dayName = dayNames[today.getDay()];
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  const weekKey = "ganesha_week_task";
+  let weekData = JSON.parse(localStorage.getItem(weekKey));
 
-    const task = document.getElementById("task").value.trim();
-    const insight = document.getElementById("insight").value.trim();
-    const parenting = document.getElementById("parenting").value.trim();
+  const currentWeek = `${today.getFullYear()}-W${getWeekNumber(today)}`;
 
-    const entry = {
-      date: today,
-      task,
-      insight,
-      parenting
+  if (!weekData || weekData.week !== currentWeek) {
+    const randomTask = tasks[Math.floor(Math.random() * tasks.length)];
+    weekData = {
+      week: currentWeek,
+      task: randomTask
     };
-
-    const logs = JSON.parse(localStorage.getItem("ganesha_logs") || "[]");
-    logs.push(entry);
-    localStorage.setItem("ganesha_logs", JSON.stringify(logs));
-
-    savedMsg.textContent = "保存しました！";
-    form.reset();
-    dateInput.value = today;
-    renderLogs();
-  });
-
-  function renderLogs() {
-    const logs = JSON.parse(localStorage.getItem("ganesha_logs") || "[]");
-    logList.innerHTML = "";
-
-    logs.slice().reverse().forEach(log => {
-      const div = document.createElement("div");
-      div.className = "log-entry";
-      div.innerHTML = `
-        <strong>${log.date}</strong><br/>
-        <b>課題:</b> ${log.task}<br/>
-        <b>気づき:</b> ${log.insight}<br/>
-        <b>子育て:</b> ${log.parenting || "（記入なし）"}
-      `;
-      logList.appendChild(div);
-    });
+    localStorage.setItem(weekKey, JSON.stringify(weekData));
   }
 
-  renderLogs();
+  document.getElementById("weekly-task-title").textContent = weekData.task.title;
+  document.getElementById("daily-advice").textContent = weekData.task.advice[dayName] || "今日はお休み。ゆっくり過ごそう。";
+}
 
-  document.getElementById("generateBlog").addEventListener("click", () => {
-    const logs = JSON.parse(localStorage.getItem("ganesha_logs") || "[]");
-    const title = document.getElementById("weeklyTitle").value || "（課題未入力）";
+function getWeekNumber(d) {
+  d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+}
 
-    const recentLogs = logs.slice(-7);
-    let body = `タイトル：ガネーシャ課題チャレンジ｜今週のテーマ「${title}」
-
-`;
-    body += "今週も一歩ずつ進みました。
-日々の暮らしの中で感じたこと、気づいたこと、そして娘たちに伝えたいことをまとめておきます。
-
-";
-    body += `■ 今週の課題：「${title}」
-
-`;
-
-    recentLogs.forEach((log, i) => {
-      body += `【${i + 1}日目（${log.date}）】
-・気づき：${log.insight}
-・子育てとのつながり：${log.parenting || "（記入なし）"}
-
-`;
-    });
-
-    body += "■ まとめのひとこと：
-";
-    body += "この課題を通じて、自分の中の何かに気づくことができた。
-これを娘たちが読む頃には、きっと彼女たちの人生にも通じる何かがあると信じて。
-
-";
-    body += "ありがとう、ガネーシャ。
-来週の課題も楽しみだ.";
-
-    document.getElementById("blogOutput").value = body;
-  });
-
-  document.getElementById("copyBlog").addEventListener("click", () => {
-    const text = document.getElementById("blogOutput");
-    text.select();
-    document.execCommand("copy");
-    document.getElementById("copyMessage").textContent = "コピーしました！";
-  });
-
-  // CSV / JSON ダウンロード機能
-  document.getElementById("exportCSV").addEventListener("click", () => {
-    const logs = JSON.parse(localStorage.getItem("ganesha_logs") || "[]");
-    const csv = logs.map(log =>
-      [log.date, log.task, `"${log.insight}"`, `"${log.parenting}"`].join(",")
-    );
-    csv.unshift("日付,課題,気づき,子育てとのつながり");
-    downloadFile("ganesha_logs.csv", csv.join("\n"));
-  });
-
-  document.getElementById("exportJSON").addEventListener("click", () => {
-    const logs = JSON.parse(localStorage.getItem("ganesha_logs") || "[]");
-    const json = JSON.stringify(logs, null, 2);
-    downloadFile("ganesha_logs.json", json);
-  });
-
-  function downloadFile(filename, content) {
-    const blob = new Blob([content], { type: "text/plain" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = filename;
-    a.click();
-  }
-});
+window.addEventListener("DOMContentLoaded", loadWeeklyTask);
