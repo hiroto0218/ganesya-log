@@ -1,1 +1,1 @@
-// Final script content was handled before reset
+// 読み込み不具合修正版 script.js
