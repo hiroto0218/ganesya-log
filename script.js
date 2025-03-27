@@ -24,13 +24,20 @@ async function loadWeeklyTask() {
 
   // 実行メモ読み込み
   const memoData = JSON.parse(localStorage.getItem(memoKey) || "{}");
-  document.getElementById("dailyMemo").value = memoData[dayName] || "";
+  const memoField = document.getElementById("dailyMemo");
+  const savedMemo = memoData[dayName] || "";
+  memoField.value = savedMemo;
+
+  const memoMsg = document.getElementById("memoSavedMsg");
+  if (savedMemo) {
+    memoMsg.textContent = "保存済み。いつでも訂正できます！";
+  }
 
   document.getElementById("saveMemoBtn").addEventListener("click", () => {
-    const memo = document.getElementById("dailyMemo").value;
+    const memo = memoField.value;
     memoData[dayName] = memo;
     localStorage.setItem(memoKey, JSON.stringify(memoData));
-    document.getElementById("memoSavedMsg").textContent = "メモを保存しました！";
+    memoMsg.textContent = "メモを保存しました！再編集も可能です。";
   });
 
   document.getElementById("completeButton").addEventListener("click", () => {
