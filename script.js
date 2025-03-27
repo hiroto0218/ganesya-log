@@ -7,22 +7,31 @@ async function loadWeeklyTask() {
   const dayName = dayNames[today.getDay()];
   const weekKey = "ganesha_week_task";
   const completedKey = "ganesha_task_log";
+  const memoKey = "ganesha_task_memo";
 
   const currentWeek = `${today.getFullYear()}-W${getWeekNumber(today)}`;
   let weekData = JSON.parse(localStorage.getItem(weekKey));
 
   if (!weekData || weekData.week !== currentWeek) {
     const randomTask = tasks[Math.floor(Math.random() * tasks.length)];
-    weekData = {
-      week: currentWeek,
-      task: randomTask
-    };
+    weekData = { week: currentWeek, task: randomTask };
     localStorage.setItem(weekKey, JSON.stringify(weekData));
   }
 
   const task = weekData.task;
   document.getElementById("weekly-task-title").textContent = task.title;
-  document.getElementById("daily-advice").textContent = task.advice[dayName] || "今日はお休み。ゆっくり過ごそう。";
+  document.getElementById("daily-advice").textContent = task.advice[dayName] || "今日はお休み。";
+
+  // 実行メモ読み込み
+  const memoData = JSON.parse(localStorage.getItem(memoKey) || "{}");
+  document.getElementById("dailyMemo").value = memoData[dayName] || "";
+
+  document.getElementById("saveMemoBtn").addEventListener("click", () => {
+    const memo = document.getElementById("dailyMemo").value;
+    memoData[dayName] = memo;
+    localStorage.setItem(memoKey, JSON.stringify(memoData));
+    document.getElementById("memoSavedMsg").textContent = "メモを保存しました！";
+  });
 
   document.getElementById("completeButton").addEventListener("click", () => {
     const log = JSON.parse(localStorage.getItem(completedKey) || "[]");
@@ -33,7 +42,12 @@ async function loadWeeklyTask() {
   });
 
   document.getElementById("generateBlogButton").addEventListener("click", () => {
-    const content = `今週の課題：「${task.title}」\n\n今週もこの課題を通して気づいたこと、考えたことをまとめておこう。\n\n・月曜：${task.advice["月"]}\n・火曜：${task.advice["火"]}\n・水曜：${task.advice["水"]}\n・木曜：${task.advice["木"]}\n・金曜：${task.advice["金"]}\n\nこの課題を通じて、昨日の自分よりほんの少し前に進めた気がする。`;
+    const memo = JSON.parse(localStorage.getItem(memoKey) || "{}");
+    const lines = Object.keys(task.advice).map(day =>
+      `・${day}曜：${task.advice[day]}${memo[day] ? " → 実行メモ：" + memo[day] : ""}`
+    ).join("\n");
+
+    const content = `今週の課題：「${task.title}」\n\n今週もこの課題を通して気づいたこと、考えたことをまとめておこう。\n\n${lines}\n\nこの課題を通じて、昨日の自分よりほんの少し前に進めた気がする。`;
     document.getElementById("blogTemplate").value = content;
   });
 
