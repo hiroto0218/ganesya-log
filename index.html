@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ガネーシャ課題ログ</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="notebook">
@@ -24,7 +25,7 @@
 
       <div id="memoHint"></div>
       <label for="dailyMemo">＞ 今日の実行メモ：</label>
-      <textarea id="dailyMemo"></textarea>
+      <textarea id="dailyMemo" rows="4"></textarea>
       <button id="saveMemoBtn">メモを保存</button>
       <p id="memoSavedMsg"></p>
       <button id="completeButton">今日のアクション達成！</button>
@@ -33,12 +34,14 @@
       <p id="weeklyDoneStatus"></p>
     </div>
 
+    <hr />
     <h2>週ごとの課題履歴</h2>
     <div id="historyArea"></div>
 
+    <hr />
     <h2>ブログテンプレート自動生成</h2>
     <button id="generateBlogButton">今週のブログテンプレートを生成</button>
-    <textarea id="blogTemplate" rows="10" style="width:100%;"></textarea>
+    <textarea id="blogTemplate" rows="10" style="width:100%;margin-top:10px;"></textarea>
     <button id="copyBlogBtn">コピー</button>
     <p id="copyStatus"></p>
   </div>
