@@ -4,41 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ガネーシャ課題ログ</title>
-  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="notebook">
     <h1>ガネーシャ課題ログ</h1>
 
-    <div id="weeklyTaskArea" class="weekly-task">
+    <div id="weeklyTaskArea">
       <h2>今週のガネーシャ課題</h2>
       <p id="weekly-task-title">読み込み中...</p>
+
+      <h3>なぜこの課題？</h3>
+      <p id="task-intention">読み込み中...</p>
+
+      <h3>この課題をやり遂げると？</h3>
+      <p id="task-effect">読み込み中...</p>
+
       <h3>今日のアドバイス</h3>
       <p id="daily-advice">読み込み中...</p>
 
-      <div id="memoHint" style="background:#f5f5f5;padding:10px;margin:10px 0;"></div>
-
+      <div id="memoHint"></div>
       <label for="dailyMemo">＞ 今日の実行メモ：</label>
-      <textarea id="dailyMemo" rows="3" style="width:100%;"></textarea>
+      <textarea id="dailyMemo"></textarea>
       <button id="saveMemoBtn">メモを保存</button>
-      <p id="memoSavedMsg" class="saved"></p>
-
+      <p id="memoSavedMsg"></p>
       <button id="completeButton">今日のアクション達成！</button>
-      <p id="completionMessage" class="saved"></p>
-
-      <hr />
+      <p id="completionMessage"></p>
       <button id="weeklyDoneButton">今週の課題をやり遂げた！</button>
-      <p id="weeklyDoneStatus" class="saved"></p>
+      <p id="weeklyDoneStatus"></p>
     </div>
 
-    <hr />
     <h2>週ごとの課題履歴</h2>
     <div id="historyArea"></div>
 
-    <hr />
     <h2>ブログテンプレート自動生成</h2>
     <button id="generateBlogButton">今週のブログテンプレートを生成</button>
-    <textarea id="blogTemplate" rows="10" style="width:100%;margin-top:10px;"></textarea>
+    <textarea id="blogTemplate" rows="10" style="width:100%;"></textarea>
     <button id="copyBlogBtn">コピー</button>
     <p id="copyStatus"></p>
   </div>
