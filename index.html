@@ -1,44 +1,17 @@
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ガネーシャ課題ログ</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="notebook">
-    <h1>ガネーシャ課題ログ</h1>
-
-    <div id="weeklyTaskArea">
-      <h2>今週のガネーシャ課題</h2>
-      <p id="weekly-task-title">読み込み中...</p>
-
-      <h3>なぜこの課題？</h3>
-      <p id="task-intention">読み込み中...</p>
-
-      <h3>この課題をやり遂げると？</h3>
-      <p id="task-effect">読み込み中...</p>
-
-      <h3>今日のアドバイス</h3>
-      <p id="daily-advice">読み込み中...</p>
-
-      <label for="dailyMemo">＞ 今日の実行メモ：</label>
-      <textarea id="dailyMemo" rows="4"></textarea>
-    </div>
-
-    <hr />
-    <h2>週ごとの課題履歴</h2>
-    <div id="historyArea"></div>
-
-    <hr />
-    <h2>ブログテンプレート自動生成</h2>
-    <button id="generateBlogButton">今週のブログテンプレートを生成</button>
-    <textarea id="blogTemplate" rows="10" style="width:100%;margin-top:10px;"></textarea>
-    <button id="copyBlogBtn">コピー</button>
-    <p id="copyStatus"></p>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ガネーシャ課題ログ</title><link rel="stylesheet" href="style.css"></head><body class="notebook">
+<h1>ガネーシャ課題ログ</h1>
+<section><h2>今週の課題</h2><p id="weekly-task-title"></p>
+<h3>なぜこの課題？</h3><p id="task-intention"></p>
+<h3>この課題をやり遂げると？</h3><p id="task-effect"></p>
+<h3>今日のアドバイス</h3><p id="daily-advice"></p>
+<h3>＞ 実行メモ</h3><p id="memoHint" class="hint"></p>
+<textarea id="dailyMemo" rows="4"></textarea>
+<button id="saveMemoButton">メモ保存</button><p id="memoStatus"></p></section>
+<section><h3>＞ 今週の達成</h3><button id="completeTaskButton">達成！</button><p id="taskCompleteStatus"></p></section>
+<hr><section><h2>履歴</h2><div id="historyArea"></div></section>
+<hr><section><h2>ブログテンプレ生成</h2><button id="generateBlogButton">生成</button>
+<textarea id="blogTemplate" rows="10" style="width:100%;margin-top:10px;"></textarea>
+<button id="copyBlogBtn">コピー</button><p id="copyStatus"></p></section>
+<script src="script.js"></script></body></html>
