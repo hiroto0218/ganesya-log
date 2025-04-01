@@ -42,18 +42,30 @@ document.addEventListener("DOMContentLoaded", async function () {
     location.reload(); // 再読み込みして次の課題を表示
   });
 
+  // 履歴一覧の生成（課題＋達成＋メモ）
   const historyDiv = document.getElementById("historyArea");
-  let html = "";
+  let historyEntries = [];
+
   for (let i = 0; i < localStorage.length; i++) {
-    const k = localStorage.key(i);
-    if (k.endsWith("_completed")) {
-      const wk = k.replace("_completed", "");
-      const indexKey = wk + "_override_index";
-      const idx = localStorage.getItem(indexKey) || (parseInt(wk.split("-W")[1]) % tasks.length);
-      html += `<p>${wk}：${tasks[idx].title}（達成）</p>`;
+    const key = localStorage.key(i);
+    if (key.endsWith("_memo")) {
+      const wk = key.replace("_memo", "");
+      const memo = localStorage.getItem(key);
+      const complete = localStorage.getItem(wk + "_completed");
+      const idx = localStorage.getItem(wk + "_override_index") || (parseInt(wk.split("-W")[1]) % tasks.length);
+      const taskTitle = tasks[idx % tasks.length]?.title || "(課題不明)";
+      historyEntries.push({ week: wk, title: taskTitle, memo: memo, completed: !!complete });
     }
   }
-  historyDiv.innerHTML = html;
+
+  historyEntries.sort((a, b) => a.week.localeCompare(b.week));
+
+  historyDiv.innerHTML = historyEntries.map(e => `
+    <div class="history-entry">
+      <strong>${e.week}</strong>：${e.title} ${e.completed ? "（達成）" : ""}
+      <div class="history-memo">メモ：${e.memo}</div>
+    </div>
+  `).join("");
 
   document.getElementById("generateBlogButton").addEventListener("click", () => {
     const m = document.getElementById("dailyMemo").value;
